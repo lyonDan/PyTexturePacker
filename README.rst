@@ -3,7 +3,7 @@ fork from https://github.com/wo1fsea/PyTexturePacker
 Features
 ========
 - Support uv build system
-- Support ignore frame key suffix, like "_0001"
+- Support ignore frame key suffix, like ".png", ".jpg"
 - Support single atlas without %d in output_name
 
 
