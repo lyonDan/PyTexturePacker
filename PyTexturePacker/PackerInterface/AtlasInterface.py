@@ -38,7 +38,7 @@ class AtlasInterface(object):
 
         self.image_rect_list = []
 
-    def dump_plist(self, texture_file_name="", input_base_path=None, atlas_format=ATLAS_FORMAT_PLIST):
+    def dump_plist(self, texture_file_name="", input_base_path=None, atlas_format=ATLAS_FORMAT_PLIST, ignore_image_ext=False):
         import os
 
         plist_data = {}
@@ -60,8 +60,11 @@ class AtlasInterface(object):
                 path = os.path.relpath(os.path.abspath(
                     path), os.path.abspath(input_base_path))
 
+            frame_key = path
+            if ignore_image_ext:
+                frame_key, _ = os.path.splitext(frame_key)
             if atlas_format == ATLAS_FORMAT_PLIST:
-                frames[path] = dict(
+                frames[frame_key] = dict(
                     frame="{{%d,%d},{%d,%d}}" % (
                         image_rect.x, image_rect.y, width, height),
                     offset="{%d,%d}" % center_offset,
@@ -71,7 +74,7 @@ class AtlasInterface(object):
                     sourceSize="{%d,%d}" % image_rect.source_size,
                 )
             else:
-                frames[path] = dict(
+                frames[frame_key] = dict(
                     frame=dict(x=image_rect.x, y=image_rect.y,
                                w=width, h=height),
                     rotated=bool(image_rect.rotated),

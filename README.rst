@@ -1,3 +1,13 @@
+fork from https://github.com/wo1fsea/PyTexturePacker
+
+Features
+========
+- Support uv build system
+- Support ignore frame key suffix, like "_0001"
+- Support single atlas without %d in output_name
+
+
+
 PyTexturePacker |pypi-status| |build-status| |docs-status|
 ==========================================================
 
@@ -35,7 +45,7 @@ Install Pillow with pip:
 
 .. code:: bash
 
-    $ pip install PyTexturePacker
+    $ pip install pytexturepacker-xxl
 
 
 Usage
@@ -52,6 +62,8 @@ Here comes an example of using PyTexturePacker to pack texture images from a dir
         packer = Packer.create(max_width=2048, max_height=2048, bg_color=0xffffff00)
         # pack texture images under directory "test_case/" and name the output images as "test_case".
         # "%d" in output file name "test_case%d" is a placeholder, which is the atlas index, starting with 0.
+        # def pack(self, input_images, output_name, output_path="", input_base_path=None, ignore_image_ext=False):
+        packer = Packer.create(max_width=2048, max_height=2048, bg_color=0xffffff00)    
         packer.pack("test_case/", "test_case%d")
 
 
