@@ -160,7 +160,7 @@ class PackerInterface(object):
     def _pack(self, image_rect_list):
         raise NotImplementedError
 
-    def pack(self, input_images, output_name, output_path="", input_base_path=None, ignore_image_ext=False):
+    def pack(self, input_images, output_name, output_path="", input_base_path=None, trim_sprite_names=False):
         """
         pack the input images to sheets
         :param input_images: a list of input image paths or a input dir path
@@ -193,7 +193,7 @@ class PackerInterface(object):
             texture_file_name = output_name if "%d" not in output_name else output_name % i
 
             packed_plist = atlas.dump_plist("%s%s" % (texture_file_name, self.texture_format), input_base_path,
-                                            self.atlas_format, ignore_image_ext=ignore_image_ext)
+                                            self.atlas_format, trim_sprite_names=trim_sprite_names)
             packed_image = atlas.dump_image(self.bg_color)
 
             if self.reduce_border_artifacts:
