@@ -189,6 +189,8 @@ class PackerInterface(object):
             assert "%d" in output_name or len(
                 atlas_list) == 1, 'more than one output image, but no "%d" in output_name'
 
+        out_atlas = []
+        out_pngs = []
         for i, atlas in enumerate(atlas_list):
             texture_file_name = output_name if "%d" not in output_name else output_name % i
 
@@ -201,10 +203,15 @@ class PackerInterface(object):
 
             atlas_data_ext = self.atlas_ext or Utils.get_atlas_data_ext(
                 self.atlas_format)
-            Utils.save_atlas_data(packed_plist, os.path.join(output_path, "%s%s" % (texture_file_name, atlas_data_ext)),
-                                  self.atlas_format)
-            Utils.save_image(packed_image, os.path.join(
-                output_path, "%s%s" % (texture_file_name, self.texture_format)))
+            atlasPath = os.path.join(output_path, "%s%s" % (texture_file_name, atlas_data_ext))
+            Utils.save_atlas_data(packed_plist, atlasPath, self.atlas_format)
+            pngPath = os.path.join(output_path, "%s%s" % (texture_file_name, self.texture_format))
+            Utils.save_image(packed_image, pngPath)
+            
+            out_atlas.append(atlasPath)
+            out_pngs.append(pngPath)
+
+        return out_atlas, out_pngs
 
     def multi_pack(self, pack_args_list):
         """
